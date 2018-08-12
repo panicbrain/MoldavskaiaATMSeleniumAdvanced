@@ -1,5 +1,6 @@
 package PageObjects;
 
+import Utils.Screenshoter;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -19,24 +20,16 @@ public class HomePage extends AbstractPage {
         return this;
     }
 
-    public HomePage clearLoginInput() {
+    public IncomingMailsPage logIn(String login, String password) {
         driver.findElement(LOGIN_INPUT_LOCATOR).clear();
-        return this;
-    }
-
-    public HomePage fillLoginInput(String login) {
         WebElement loginInput = driver.findElement(LOGIN_INPUT_LOCATOR);
         new Actions(driver).sendKeys(loginInput, login).build().perform();
-        return this;
-    }
-
-    public HomePage fillPasswordInput(String password) {
         driver.findElement(PASSWORD_INPUT_LOCATOR).sendKeys(password);
-        return this;
-    }
-
-    public IncomingMailsPage signIn() {
+        Screenshoter.takeScreenshot();
         driver.findElement(SIGN_IN_BUTTON).click();
         return new IncomingMailsPage(driver);
     }
 }
+
+
+

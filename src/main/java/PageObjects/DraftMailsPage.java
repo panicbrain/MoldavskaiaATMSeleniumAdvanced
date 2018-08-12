@@ -13,6 +13,7 @@ public class DraftMailsPage extends BaseAreasPage {
 
     public NewLetterPage openLastSavedDraft() {
         driver.findElement(LAST_SAVED_DRAFT_LOCATOR).click();
+        waitForAjaxProcessed();
         return new NewLetterPage(driver);
     }
 }

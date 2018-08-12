@@ -1,5 +1,6 @@
 package PageObjects;
 
+import Utils.Screenshoter;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
@@ -32,7 +33,6 @@ public class NewLetterPage extends BaseAreasPage {
     }
 
     public NewLetterPage fillMailBodyInput(String mailBodyText) {
-        waitForAjaxProcessed();
         driver.switchTo().frame(driver.findElement(FRAME_MAIL_BODY_LOCATOR));
         waitForElementEnabled(MAIL_BODY_INPUT_LOCATOR);
         driver.findElement(MAIL_BODY_INPUT_LOCATOR).sendKeys(mailBodyText);
@@ -42,6 +42,9 @@ public class NewLetterPage extends BaseAreasPage {
 
     public NewLetterPage saveAsDraft() {
         waitForElementEnabled(SAVE_AS_DRAFT_BUTTON_LOCATOR);
+        highlightElement(SAVE_AS_DRAFT_BUTTON_LOCATOR);
+        Screenshoter.takeScreenshot();
+        unHighlightElement(SAVE_AS_DRAFT_BUTTON_LOCATOR);
         driver.findElement(SAVE_AS_DRAFT_BUTTON_LOCATOR).click();
         waitForElementVisible(SAVE_STATUS_MESSAGE_LOCATOR);
         return this;
@@ -69,6 +72,9 @@ public class NewLetterPage extends BaseAreasPage {
 
     public void sendMail() {
         waitForElementEnabled(SEND_MAIL_BUTTON);
+        highlightElement(SEND_MAIL_BUTTON);
+        Screenshoter.takeScreenshot();
+        unHighlightElement(SEND_MAIL_BUTTON);
         driver.findElement(SEND_MAIL_BUTTON).click();
         waitForElementVisible(SENT_MAIL_MESSAGE);
     }

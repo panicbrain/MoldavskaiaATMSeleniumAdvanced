@@ -1,40 +1,28 @@
 import PageObjects.*;
+import Utils.WebDriverSingleton;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.chrome.ChromeDriver;
-import org.openqa.selenium.remote.DesiredCapabilities;
-import org.openqa.selenium.remote.RemoteWebDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
-import java.net.MalformedURLException;
-import java.net.URL;
-import java.util.concurrent.TimeUnit;
 
 import static PageObjects.BaseAreasPage.MAIL_SUBJECT;
 import static org.testng.Assert.*;
 
 public class MailRuTestPageObject {
 
-    private WebDriver driver = null;
+    private WebDriver driver;
 
     @BeforeClass
     public void beforeClass() {
-        try {
-            driver = new RemoteWebDriver(new URL("http://192.168.56.1:4444/wd/hub"), DesiredCapabilities.chrome());
-        } catch (MalformedURLException e) {
-            e.printStackTrace();
-        }
-        driver.manage().timeouts().pageLoadTimeout(15, TimeUnit.SECONDS);
-        driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
-        driver.manage().window().maximize();
+        driver = WebDriverSingleton.getWebDriverInstance();
     }
 
     @AfterClass(alwaysRun = true)
     public void closeBrowser() {
-        driver.quit();
+        WebDriverSingleton.kill();
     }
 
     @Test(description = "mail.ru page should open and contain appropriate title")
@@ -46,13 +34,8 @@ public class MailRuTestPageObject {
         homepage.open();
         assertEquals(homepage.driver.getTitle(), "Mail.Ru: почта, поиск в интернете, новости, игры");
 
-        // clear the email address field
-        homepage.clearLoginInput();
-
         //login to the mail box
-        homepage.fillLoginInput("MoldavskaiaATM");
-        homepage.fillPasswordInput("ghbvtcm46");
-        IncomingMailsPage incomingMailsPage = homepage.signIn();
+        IncomingMailsPage incomingMailsPage = homepage.logIn("MoldavskaiaATM", "ghbvtcm46");
 
         // assert that the login was successful
         wait.until(ExpectedConditions.titleContains("Входящие - Почта Mail.Ru"));

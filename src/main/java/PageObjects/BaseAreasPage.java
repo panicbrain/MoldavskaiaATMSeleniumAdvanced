@@ -1,5 +1,6 @@
 package PageObjects;
 
+import Utils.Screenshoter;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -27,6 +28,7 @@ public abstract class BaseAreasPage extends AbstractPage {
     public NewLetterPage createNewLetter() {
         waitForElementEnabled(NEW_LETTER_BUTTON);
         highlightElement(NEW_LETTER_BUTTON);
+        Screenshoter.takeScreenshot();
         unHighlightElement(NEW_LETTER_BUTTON);
         driver.findElement(NEW_LETTER_BUTTON).click();
         return new NewLetterPage(driver);
@@ -35,6 +37,7 @@ public abstract class BaseAreasPage extends AbstractPage {
     public DraftMailsPage openDraftFolder() {
         waitForElementEnabled(DRAFT_LETTERS_FOLDER_LOCATOR);
         highlightElement(DRAFT_LETTERS_FOLDER_LOCATOR);
+        Screenshoter.takeScreenshot();
         unHighlightElement(DRAFT_LETTERS_FOLDER_LOCATOR);
         driver.findElement(DRAFT_LETTERS_FOLDER_LOCATOR).click();
         return new DraftMailsPage(driver);
@@ -43,6 +46,7 @@ public abstract class BaseAreasPage extends AbstractPage {
     public SentMailsPage openSentFolder() {
         waitForElementEnabled(SENT_LETTERS_FOLDER_LOCATOR);
         highlightElement(SENT_LETTERS_FOLDER_LOCATOR);
+        Screenshoter.takeScreenshot();
         unHighlightElement(SENT_LETTERS_FOLDER_LOCATOR);
         driver.findElement(SENT_LETTERS_FOLDER_LOCATOR).click();
         return new SentMailsPage(driver);
@@ -51,6 +55,7 @@ public abstract class BaseAreasPage extends AbstractPage {
     public HomePage logOff() {
         waitForElementEnabled(LOG_OFF_BUTTON_LOCATOR);
         highlightElement(LOG_OFF_BUTTON_LOCATOR);
+        Screenshoter.takeScreenshot();
         unHighlightElement(LOG_OFF_BUTTON_LOCATOR);
         WebElement logOffLink = driver.findElement(LOG_OFF_BUTTON_LOCATOR);
         new Actions(driver).click(logOffLink).build().perform();
